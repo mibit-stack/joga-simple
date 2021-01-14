@@ -19,24 +19,4 @@ class aboutActivity : AppCompatActivity() {
 
         return super.onCreateOptionsMenu(menu)
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        /*if(item.itemId==android.R.id.home)
-            finish()
-        */
-
-        when(item.itemId){
-            android.R.id.home->finish()
-            R.id.id_info->{
-                return true
-            }
-            R.id.id_sound->{
-                Snackbar.make(mainView, "Kliknięto menu stop...", Snackbar.LENGTH_SHORT).show()
-                return true
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
 }

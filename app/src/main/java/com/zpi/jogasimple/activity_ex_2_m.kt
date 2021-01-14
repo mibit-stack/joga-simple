@@ -43,7 +43,6 @@ class activity_ex_2_m : AppCompatActivity() {
     fun openStartDialog(){
         val dialogBuilder = AlertDialog.Builder(this)
 
-
         dialogBuilder.setMessage("Przykładowy opis ćwiczenia")
         dialogBuilder.setView(layoutInflater.inflate(R.layout.excercise_dialog_layout,null))
 

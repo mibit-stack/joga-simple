@@ -1,30 +1,64 @@
 package com.zpi.jogasimple
 
-import android.content.DialogInterface
+import android.content.Intent
 import android.media.AudioManager
 import android.media.ToneGenerator
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.res.ResourcesCompat
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_excercise.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.mainView
+import kotlinx.android.synthetic.main.excercise_dialog_layout.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+
+class Exercise(var exImg: Int = 0,
+               var exDesc:String = "",
+               var exTime:Int = 30)
+
 class ExcerciseActivity : AppCompatActivity() {
+    var exerciseTime = 30;
+    var exerciseDescription = "Przykladowy opis"
+    var exerciseImage = 0;
+
+    var currentExcercise: Exercise? = null;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_excercise)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val exerciseMorning = arrayOf(
+            Exercise(R.drawable.ex_m_1, "Pierwsze cwiczenie",10),
+            Exercise(R.drawable.ex_m_2, "Drugie cwiczenie",10),
+            Exercise(R.drawable.ex_m_3,"Trzecie cwiczenie",10),
+            Exercise(R.drawable.ex_m_4,"Czwarte cwiczenie",10),
+            Exercise(R.drawable.ex_m_5,"Piate cwiczenie",10))
+
+        val exerciseNight = arrayOf(
+            Exercise(R.drawable.ex_n_1, "Pierwsze cwiczenie",20),
+            Exercise(R.drawable.ex_n_2, "To ćwiczenie nazywane jako Kwiat Lotosu, jest symbolem jogi. Ciało się odpręża, a umysł odpoczywa.",50),
+            Exercise(R.drawable.ex_n_3,"ddddd",30),
+            Exercise(R.drawable.ex_n_4,"xxxxx",30),
+            Exercise(R.drawable.ex_n_5,"asdfassafd",30))
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+
 
         val timeFormat = SimpleDateFormat("mm:ss", Locale.ENGLISH)
         var startTime : Long = 0;
+
+        loadExercise(exerciseMorning[2])
+
+        var underNineTxt = ""
+        if (exerciseTime<10) {underNineTxt= "0"}
+            timerView.setText("00:${underNineTxt}${exerciseTime}")
+
+        imageView3.setImageResource(exerciseImage)
+
 
         //val currentTime = System.currentTimeMillis()
         //val time: Int = 30-((currentTime-startTime)/1000).toInt()
@@ -34,16 +68,15 @@ class ExcerciseActivity : AppCompatActivity() {
         var timerIsStarted = false
 
         val thread = Thread {
-            var number = 30
+            var number = exerciseTime
             timerIsStarted = true
 
-            for (i in 0..30) {
+            for (i in 0..exerciseTime) {
                 var underNineTxt = "";
                 if (number<10) {underNineTxt= "0"}
                 runOnUiThread {
                     timerView.setText("00:${underNineTxt}${number}")
                 }
-
                 Thread.sleep(1000)
                 number--
             }
@@ -53,6 +86,7 @@ class ExcerciseActivity : AppCompatActivity() {
 
                 val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
                 toneG.startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT,500)
+                reload()
             }
 
             timerIsStarted = false
@@ -66,6 +100,15 @@ class ExcerciseActivity : AppCompatActivity() {
                 thread.start()
             }
         }
+    }
+
+    fun loadExercise(exercise: Exercise){
+
+        currentExcercise = exercise
+        exerciseImage = exercise.exImg
+        exerciseTime = exercise.exTime
+        exerciseDescription  = exercise.exDesc
+
     }
 
 
@@ -98,18 +141,25 @@ class ExcerciseActivity : AppCompatActivity() {
 
     fun openStartDialog(){
         val dialogBuilder = AlertDialog.Builder(this)
+        // set exercise Dialog image
+//        setContentView(R.layout.excercise_dialog_layout)
+//        imageView2.setImageResource(exerciseImage)
 
-
-        dialogBuilder.setMessage("To ćwiczenie nazywane jako Kwiat Lotosu, jest symbolem jogi. Ciało się odpręża, a umysł odpoczywa.")
+        dialogBuilder.setMessage(currentExcercise?.exDesc)
         dialogBuilder.setView(layoutInflater.inflate(R.layout.excercise_dialog_layout,null))
 
         dialogBuilder.setPositiveButton("OK"){
                 dialog, id ->
         }
-
-
         val dialog = dialogBuilder.create()
 
         dialog.show()
     }
+// reload Activity?
+    fun reload() {
+        finish()
+        startActivity(getIntent());
+    }
+
+
 }

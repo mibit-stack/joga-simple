@@ -51,7 +51,16 @@ class ExcerciseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_excercise)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val setName = intent.extras?.get("ExerciseSet") as String
+
+        setName.let {
+            if(it.contains("Morning"))
+                currentExcerciseSet = exerciseMorning
+            else
+                currentExcerciseSet = exerciseNight
+        }
 
         loadExercise(currentExcerciseSet[currentExcerciseNo])
 

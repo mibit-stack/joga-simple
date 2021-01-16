@@ -19,11 +19,13 @@ class MainActivity : AppCompatActivity() {
 
         excerciseDayButton.setOnClickListener{
             val excerciseIntent = Intent(this,ExcerciseActivity::class.java)
+            excerciseIntent.putExtra("ExerciseSet","exerciseMorning")
             startActivity(excerciseIntent)
         }
         excerciseNightButton.setOnClickListener{
-            val excerciseIntent2 = Intent(this,ExcerciseActivity::class.java)
-            startActivity(excerciseIntent2)
+            val excerciseIntent = Intent(this,ExcerciseActivity::class.java)
+            excerciseIntent.putExtra("ExerciseSet","exerciseNight")
+            startActivity(excerciseIntent)
         }
         aboutButton.setOnClickListener{
             val excerciseIntent3 = Intent(this,aboutActivity::class.java)

@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/dialogExcerciseImageView"
         android:layout_width="378dp"
         android:layout_height="395dp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -6,6 +6,7 @@ import android.media.ToneGenerator
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -26,47 +27,58 @@ class ExcerciseActivity : AppCompatActivity() {
     var exerciseImage = 0;
 
     var currentExcercise: Exercise? = null;
+    var timerIsStarted = false
+
+    var currentExcerciseNo = 0
+
+    val exerciseMorning = arrayOf(
+        Exercise(R.drawable.ex_m_1, "Pierwsze cwiczenie",10),
+        Exercise(R.drawable.ex_m_2, "Drugie cwiczenie",10),
+        Exercise(R.drawable.ex_m_3,"Trzecie cwiczenie",10),
+        Exercise(R.drawable.ex_m_4,"Czwarte cwiczenie",10),
+        Exercise(R.drawable.ex_m_5,"Piate cwiczenie",10))
+
+    val exerciseNight = arrayOf(
+        Exercise(R.drawable.ex_n_1, "Pierwsze cwiczenie",20),
+        Exercise(R.drawable.ex_n_2, "To ćwiczenie nazywane jako Kwiat Lotosu, jest symbolem jogi. Ciało się odpręża, a umysł odpoczywa.",50),
+        Exercise(R.drawable.ex_n_3,"ddddd",30),
+        Exercise(R.drawable.ex_n_4,"xxxxx",30),
+        Exercise(R.drawable.ex_n_5,"asdfassafd",30))
+
+    var currentExcerciseSet = exerciseMorning
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_excercise)
 
-        val exerciseMorning = arrayOf(
-            Exercise(R.drawable.ex_m_1, "Pierwsze cwiczenie",10),
-            Exercise(R.drawable.ex_m_2, "Drugie cwiczenie",10),
-            Exercise(R.drawable.ex_m_3,"Trzecie cwiczenie",10),
-            Exercise(R.drawable.ex_m_4,"Czwarte cwiczenie",10),
-            Exercise(R.drawable.ex_m_5,"Piate cwiczenie",10))
-
-        val exerciseNight = arrayOf(
-            Exercise(R.drawable.ex_n_1, "Pierwsze cwiczenie",20),
-            Exercise(R.drawable.ex_n_2, "To ćwiczenie nazywane jako Kwiat Lotosu, jest symbolem jogi. Ciało się odpręża, a umysł odpoczywa.",50),
-            Exercise(R.drawable.ex_n_3,"ddddd",30),
-            Exercise(R.drawable.ex_n_4,"xxxxx",30),
-            Exercise(R.drawable.ex_n_5,"asdfassafd",30))
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
 
+        loadExercise(currentExcerciseSet[currentExcerciseNo])
 
-        val timeFormat = SimpleDateFormat("mm:ss", Locale.ENGLISH)
-        var startTime : Long = 0;
 
-        loadExercise(exerciseMorning[2])
+        startButton.setOnClickListener{
+
+            if(!timerIsStarted) {
+                startExcercise()
+            }
+        }
+    }
+
+    fun loadExercise(exercise: Exercise){
+        currentExcercise = exercise
+        exerciseImage = exercise.exImg
+        exerciseTime = exercise.exTime
+        exerciseDescription  = exercise.exDesc
 
         var underNineTxt = ""
         if (exerciseTime<10) {underNineTxt= "0"}
-            timerView.setText("00:${underNineTxt}${exerciseTime}")
+        timerView.setText("00:${underNineTxt}${exerciseTime}")
 
         imageView3.setImageResource(exerciseImage)
 
+    }
 
-        //val currentTime = System.currentTimeMillis()
-        //val time: Int = 30-((currentTime-startTime)/1000).toInt()
-
-        //timerView.setText("00:${time}")
-
-        var timerIsStarted = false
-
+    fun startExcercise(){
         val thread = Thread {
             var number = exerciseTime
             timerIsStarted = true
@@ -82,33 +94,25 @@ class ExcerciseActivity : AppCompatActivity() {
             }
 
             runOnUiThread{
-                openStartDialog()
-
                 val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
                 toneG.startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT,500)
-                reload()
+
+                currentExcerciseNo++
+
+                if(currentExcerciseNo >= currentExcerciseSet.size)
+                    currentExcerciseNo = 0
+
+                loadExercise(currentExcerciseSet[currentExcerciseNo])
+                openStartDialog()
+
+                //reload()
             }
 
             timerIsStarted = false
 
         }
 
-        startButton.setOnClickListener{
-            startTime = System.currentTimeMillis()
-
-            if(!timerIsStarted) {
-                thread.start()
-            }
-        }
-    }
-
-    fun loadExercise(exercise: Exercise){
-
-        currentExcercise = exercise
-        exerciseImage = exercise.exImg
-        exerciseTime = exercise.exTime
-        exerciseDescription  = exercise.exDesc
-
+        thread.start()
     }
 
 
@@ -145,8 +149,14 @@ class ExcerciseActivity : AppCompatActivity() {
 //        setContentView(R.layout.excercise_dialog_layout)
 //        imageView2.setImageResource(exerciseImage)
 
+        val dialogView = layoutInflater.inflate(R.layout.excercise_dialog_layout,null)
+
+        val dialogExcerciseView = dialogView.findViewById(R.id.dialogExcerciseImageView) as ImageView
+        dialogExcerciseView.setImageResource(exerciseImage)
+
         dialogBuilder.setMessage(currentExcercise?.exDesc)
-        dialogBuilder.setView(layoutInflater.inflate(R.layout.excercise_dialog_layout,null))
+
+        dialogBuilder.setView(dialogView)
 
         dialogBuilder.setPositiveButton("OK"){
                 dialog, id ->

@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(excerciseIntent)
         }
         excerciseNightButton.setOnClickListener{
-            val excerciseIntent2 = Intent(this,activity_ex_2_m::class.java)
+            val excerciseIntent2 = Intent(this,ExcerciseActivity::class.java)
             startActivity(excerciseIntent2)
         }
         aboutButton.setOnClickListener{

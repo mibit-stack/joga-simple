@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Joga</string>
-    <string name="joga_wieczorna">JOGA WIECZORNA</string>
+    <string name="joga_wieczorna">JOGA \n WIECZORNA</string>
     <string name="o_aplikacji">O APLIKACJI</string>
-    <string name="joga_poranna">JOGA PORANNA</string>
+    <string name="joga_poranna">JOGA \n
+        PORANNA</string>
     <string name="info">Info</string>
     <string name="sound">Sound</string>
     <string name="pauza">PAUZA</string>

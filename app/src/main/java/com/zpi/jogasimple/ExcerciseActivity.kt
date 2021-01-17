@@ -80,7 +80,9 @@ class ExcerciseActivity : AppCompatActivity() {
 
             else {
                 currentExcerciseSet = exerciseNight
-                activityMain.setBackgroundColor(Color.parseColor("#9999ff"));
+                activityMain.setBackgroundColor(Color.parseColor("#7799ff"));
+//                activityMain.setBackgroundResource(R.drawable.night_set_gradient)
+
             }
 
         }

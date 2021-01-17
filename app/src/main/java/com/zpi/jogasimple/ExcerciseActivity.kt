@@ -7,6 +7,7 @@ import android.media.ToneGenerator
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -70,18 +71,20 @@ class ExcerciseActivity : AppCompatActivity() {
         // Changing layout color by set name
 
         val activityMain = findViewById(R.id.mainView) as ConstraintLayout
+        val buttonStart = findViewById(R.id.startButton) as Button
 
 
         setName.let {
             if(it.contains("Morning")) {
                 currentExcerciseSet = exerciseMorning
-                activityMain.setBackgroundColor(Color.parseColor("#fee276"));
+                activityMain.setBackgroundColor(Color.parseColor("#fffde8"));
             }
 
             else {
                 currentExcerciseSet = exerciseNight
                 activityMain.setBackgroundColor(Color.parseColor("#7799ff"));
 //                activityMain.setBackgroundResource(R.drawable.night_set_gradient)
+                buttonStart.setBackgroundColor(Color.parseColor("#3355bb"))
 
             }
 

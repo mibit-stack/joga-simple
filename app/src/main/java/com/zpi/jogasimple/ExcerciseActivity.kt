@@ -1,6 +1,7 @@
 package com.zpi.jogasimple
 
 import android.content.Intent
+import android.graphics.Color
 import android.media.AudioManager
 import android.media.ToneGenerator
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.MenuItem
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_excercise.*
 import kotlinx.android.synthetic.main.activity_main.mainView
@@ -32,34 +34,55 @@ class ExcerciseActivity : AppCompatActivity() {
     var currentExcerciseNo = 0
 
     val exerciseMorning = arrayOf(
-        Exercise(R.drawable.ex_m_1, "Pierwsze cwiczenie",10),
-        Exercise(R.drawable.ex_m_2, "Drugie cwiczenie",10),
-        Exercise(R.drawable.ex_m_3,"Trzecie cwiczenie",10),
-        Exercise(R.drawable.ex_m_4,"Czwarte cwiczenie",10),
-        Exercise(R.drawable.ex_m_5,"Piate cwiczenie",10))
+        Exercise(R.drawable.ex_m_1, "Pierwsze cwiczenie",5),
+        Exercise(R.drawable.ex_m_2, "Drugie cwiczenie",5),
+        Exercise(R.drawable.ex_m_3,"Trzecie cwiczenie",5),
+        Exercise(R.drawable.ex_m_4,"Czwarte cwiczenie",5),
+        Exercise(R.drawable.ex_m_5,"Piate cwiczenie",5))
 
     val exerciseNight = arrayOf(
-        Exercise(R.drawable.ex_n_1, "Pierwsze cwiczenie",20),
-        Exercise(R.drawable.ex_n_2, "To ćwiczenie nazywane jako Kwiat Lotosu, jest symbolem jogi. Ciało się odpręża, a umysł odpoczywa.",50),
-        Exercise(R.drawable.ex_n_3,"ddddd",30),
-        Exercise(R.drawable.ex_n_4,"xxxxx",30),
-        Exercise(R.drawable.ex_n_5,"asdfassafd",30))
+        Exercise(R.drawable.ex_n_1, "Pierwsze cwiczenie",5),
+        Exercise(R.drawable.ex_n_2, "To ćwiczenie nazywane jako Kwiat Lotosu, jest symbolem jogi. Ciało się odpręża, a umysł odpoczywa.",5),
+        Exercise(R.drawable.ex_n_3,"ddddd",5),
+        Exercise(R.drawable.ex_n_4,"xxxxx",5),
+        Exercise(R.drawable.ex_n_5,"asdfassafd",5))
 
     var currentExcerciseSet = exerciseMorning
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+//        val exerciseLayoutView = findViewById(R.id.mainView) as ImageView
+//        exerciseLayoutView.setBackgroundColor(0x00FF00)
         setContentView(R.layout.activity_excercise)
+
+
+
+
+//        val dialogExcerciseView = dialogView.findViewById(R.id.dialogExcerciseImageView) as ImageView
+//        dialogExcerciseView.setImageResource(exerciseImage)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+
         val setName = intent.extras?.get("ExerciseSet") as String
 
+        // Changing layout color by set name
+
+        val activityMain = findViewById(R.id.mainView) as ConstraintLayout
+
+
         setName.let {
-            if(it.contains("Morning"))
+            if(it.contains("Morning")) {
                 currentExcerciseSet = exerciseMorning
-            else
+                activityMain.setBackgroundColor(Color.parseColor("#fee276"));
+            }
+
+            else {
                 currentExcerciseSet = exerciseNight
+                activityMain.setBackgroundColor(Color.parseColor("#9999ff"));
+            }
+
         }
 
         loadExercise(currentExcerciseSet[currentExcerciseNo])

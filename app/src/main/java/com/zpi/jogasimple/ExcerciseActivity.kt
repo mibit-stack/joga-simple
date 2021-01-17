@@ -63,25 +63,25 @@ class ExcerciseActivity : AppCompatActivity() {
         Exercise(R.drawable.ex_n_1, "Adho mukhna virasana - skłon do przodu. \n" +
                 "Pozycja ta jest jedna z lepszych jeśli chodzi o odprężenie ciała i regenerację po ciężkim dniu.\n" +
                 "\n" +
-                "Ćwiczenie pomaga uelastycznić kręgosłup, rozluźnia mięśnie szyi i intensywnie rozciąga kolana",10),
+                "Ćwiczenie pomaga uelastycznić kręgosłup, rozluźnia mięśnie szyi i intensywnie rozciąga kolana",2),
         Exercise(R.drawable.ex_n_2, " Siad klęczny z odchyleniem w tył. \n" +
                 "Należy przyjąć tą samą pozycję przez cały czas trwania ćwiczenia.\n" +
                 "\n" +
-                "Ćwiczenie pomaga rozluźnić mięśnie karku, ramion i wzmacnia zasięg odchylania pleców",5),
+                "Ćwiczenie pomaga rozluźnić mięśnie karku, ramion i wzmacnia zasięg odchylania pleców",2),
         Exercise(R.drawable.ex_n_3,"Siad klęczny z wyciągnięciem do przodu.\n" +
                 "Ćwiczenie należy wykonywać powtórzeniami z krótkimi przerwami pomiędzy.\n" +
                 "\n" +
                 "Pamiętaj żeby podczas ćwiczenia próbować sięgnąć jak najdalej.\n" +
                 "\n" +
-                "Ćwiczenie wspomaga ramiona, rozluźnia plecy i mięśnie karku.",5),
+                "Ćwiczenie wspomaga ramiona, rozluźnia plecy i mięśnie karku.",2),
         Exercise(R.drawable.ex_n_4,"Pozycja kota (Marjarysana).\n" +
                 "Wygięcia grzbietu należy utrzymywać przez dłuższą chwilę i uwzględniać chwile rozluźnienia między powtórzeniami.\n" +
                 "\n" +
-                "Ćwiczenie rewelacyjnie działa na kręgosłup wzmacniając go i rozluźniając przy tym plecy.",5),
+                "Ćwiczenie rewelacyjnie działa na kręgosłup wzmacniając go i rozluźniając przy tym plecy.",2),
         Exercise(R.drawable.ex_n_5,"Skręt w Svastikasanie. Ćwiczenie należy wykonywać naprzemiennie sięgnięciami za siebie. \n" +
                 "\n" +
                 "Należy pamiętać o prostych plecach i zsynchronizowaniu oddychania z wykonywanymi skrętami.\n" +
-                "Ćwiczenie wpływa pozytywnie na mięśnie ramion i ich rozciągnięcie.",5))
+                "Ćwiczenie wpływa pozytywnie na mięśnie ramion i ich rozciągnięcie.",2))
 
     var currentExcerciseSet = exerciseMorning
 
@@ -150,13 +150,16 @@ class ExcerciseActivity : AppCompatActivity() {
                 currentExcerciseNo++
 
                 if(currentExcerciseNo >= currentExcerciseSet.size) {
-                    currentExcerciseNo = 0
                     val excerciseIntent4 = Intent(this,MainActivity::class.java)
                     startActivity(excerciseIntent4)
+                    currentExcerciseNo = 0
                 }
-                loadExercise(currentExcerciseSet[currentExcerciseNo])
-                openStartDialog()
-            }
+                else{
+                    loadExercise(currentExcerciseSet[currentExcerciseNo])
+                    openStartDialog()
+                }
+                }
+
             timerIsStarted = false
         }
         thread.start()
@@ -197,7 +200,7 @@ class ExcerciseActivity : AppCompatActivity() {
         }
         val dialog = dialogBuilder.create()
 
-        if(currentExcerciseNo <= currentExcerciseSet.size) {
+        if(currentExcerciseNo <= currentExcerciseSet.size -1) {
             dialog.show()
         }
     }

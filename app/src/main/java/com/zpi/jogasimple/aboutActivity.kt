@@ -2,11 +2,7 @@ package com.zpi.jogasimple
 
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.mainView
-
 
 class aboutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

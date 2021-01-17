@@ -12,11 +12,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mainImageView.setOnClickListener{
-            //Toast.makeText(this,"Kliknięto w kwiat lotosu...",Toast.LENGTH_SHORT).show()
-            Snackbar.make(mainView,"Kliknięto w kwiat lotosu...",Snackbar.LENGTH_SHORT).show()
-        }
-
         excerciseDayButton.setOnClickListener{
             val excerciseIntent = Intent(this,ExcerciseActivity::class.java)
             excerciseIntent.putExtra("ExerciseSet","exerciseMorning")

@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".aboutActivity"></activity>
-        <activity android:name=".activity_ex_2_m" />
         <activity android:name=".ExcerciseActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

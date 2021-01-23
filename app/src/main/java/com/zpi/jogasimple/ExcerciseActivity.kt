@@ -3,6 +3,7 @@ package com.zpi.jogasimple
 import android.content.Intent
 import android.graphics.Color
 import android.media.AudioManager
+import android.media.MediaPlayer
 import android.media.ToneGenerator
 import android.os.Bundle
 import android.view.Menu
@@ -63,7 +64,7 @@ class ExcerciseActivity : AppCompatActivity() {
         Exercise(R.drawable.ex_n_1, "Adho mukhna virasana - skłon do przodu. \n" +
                 "Pozycja ta jest jedna z lepszych jeśli chodzi o odprężenie ciała i regenerację po ciężkim dniu.\n" +
                 "\n" +
-                "Ćwiczenie pomaga uelastycznić kręgosłup, rozluźnia mięśnie szyi i intensywnie rozciąga kolana",2),
+                "Ćwiczenie pomaga uelastycznić kręgosłup, rozluźnia mięśnie szyi i intensywnie rozciąga kolana",10),
         Exercise(R.drawable.ex_n_2, " Siad klęczny z odchyleniem w tył. \n" +
                 "Należy przyjąć tą samą pozycję przez cały czas trwania ćwiczenia.\n" +
                 "\n" +
@@ -144,8 +145,10 @@ class ExcerciseActivity : AppCompatActivity() {
             }
 
             runOnUiThread{
-                val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
-                toneG.startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT,500)
+//                val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
+//                toneG.startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT,500)
+                var mediaPlayer = MediaPlayer.create(this, R.raw.zapsplat_bells_medium_bell_soft_strike_long_decay_002_60153)
+                mediaPlayer.start()
 
                 currentExcerciseNo++
 
@@ -178,7 +181,6 @@ class ExcerciseActivity : AppCompatActivity() {
                 return true
             }
             R.id.id_sound->{
-                Snackbar.make(mainView, "Kliknięto menu stop...", Snackbar.LENGTH_SHORT).show()
                 return true
             }
         }
